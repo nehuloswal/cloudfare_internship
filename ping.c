@@ -32,7 +32,7 @@ struct ping_pkt
 //logic for ICMP checksum calculation
 unsigned short checksum(void *b, int len) 
 { 
-    unsigned short *buf = b; 
+	unsigned short *buf = b; 
 	unsigned int sum=0; 
 	unsigned short result; 
 
@@ -95,9 +95,9 @@ int main(int argc, char *argv[]) {
 
     //Setting the destination adress information
     memset((char *)&myaddr, 0, sizeof(myaddr));
-	myaddr.sin_family = AF_INET;
-	myaddr.sin_addr.s_addr = inet_addr(ip_addr);
-	myaddr.sin_port = htons(0);
+    myaddr.sin_family = AF_INET;
+    myaddr.sin_addr.s_addr = inet_addr(ip_addr);
+    myaddr.sin_port = htons(0);
 
 
     setsockopt(s, IPPROTO_IP, IP_TTL, &ttl_val, sizeof(ttl_val)); //Set the TTL limit on ICMP packets
@@ -112,13 +112,13 @@ int main(int argc, char *argv[]) {
         
         //Setting ICMP packet values
         pckt.hdr.type = ICMP_ECHO; 
-		pckt.hdr.un.echo.id = getpid(); 
-		for (i = 0; i < sizeof(pckt.msg)-1; i++ ) 
-			pckt.msg[i] = i+'0'; 
-		pckt.msg[i] = 0; 
+	pckt.hdr.un.echo.id = getpid(); 
+	for (i = 0; i < sizeof(pckt.msg)-1; i++ ) 
+		pckt.msg[i] = i+'0'; 
+	pckt.msg[i] = 0; 
 
-		pckt.hdr.un.echo.sequence = ++transmitted; 
-		pckt.hdr.checksum = checksum(&pckt, sizeof(pckt));
+	pckt.hdr.un.echo.sequence = ++transmitted; 
+	pckt.hdr.checksum = checksum(&pckt, sizeof(pckt));
 
         sleep(1);
 
